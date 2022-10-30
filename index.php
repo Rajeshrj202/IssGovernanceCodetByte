@@ -29,17 +29,40 @@ class Image{
         return $height;
     }
 
-
-
-    public function GetContainOutput($width,$height)
-    {
-    	return $width.'*'.$height;
+    public function getResizeWeight($height){
+        $width = $height * $this->aspectRatio();
+        return $width;
     }
 
 
-    public function GetCoverOutput()
+
+    
+
+    public function getCoverOutput()
     {
     	return $this->width.'*'.$this->height;
+    }
+
+    public function getContainOutput($width,$height)
+    {
+    	if($this->width<=$width && $this->height<=$height)
+    	{
+    		return $this->width.'*'.$this->height;
+    	}
+
+    	if($this->height>$height)
+    	{
+    		$imageWidth=$this->getResizeWeight($height);
+    		return floor($imageWidth).'*'.$height;
+    	}
+
+    	if($this->width>$width)
+    	{
+    		$imageHeight=$this->getResizeHeight($width);
+    		return $width.'*'.floor($imageHeight);
+    	}
+		
+
     }
 
 }
@@ -48,10 +71,8 @@ class Image{
 
 
 $imageA = new Image(250,500);
-$imageB = new Image(500,90);
+$imageB = new Image(400,600);
 
-$imageWidth = $imageA->width;
-$imageHeight=$imageB->getResizeHeight($imageWidth);
-echo 'Contain Output : '.$imageB->GetContainOutput($imageWidth,$imageHeight); // Contain Output
+echo 'Contain Output : '.$imageB->getContainOutput($imageA->width,$imageA->height); // Contain Output
 echo "<br>";
-echo 'Cover Output : '.$imageB->GetCoverOutput(); // Cover Output
+echo 'Cover Output : '.$imageB->getCoverOutput(); // Cover Output
