@@ -17,24 +17,11 @@ class Image{
     public function getHeight(){
         return   $this->height;
     }
+
+
     
     public function aspectRatio(){
         return $this->width/$this->height;
-        
-
-    }
-
-    function getRatio(){
-        $num1= $this->width;
-        $num2 = $this->height;
-        for($i = $num2; $i > 1; $i--) {
-            if(($num1 % $i) == 0 && ($num2 % $i) == 0) {
-                $num1 = $num1 / $i;
-                $num2 = $num2 / $i;
-            }
-        }
-        
-        return "$num1:$num2";
     }
 
     public function getResizeHeight($width){
@@ -49,6 +36,12 @@ class Image{
     	return $width.'*'.$height;
     }
 
+
+    public function GetCoverOutput()
+    {
+    	return $this->width.'*'.$this->height;
+    }
+
 }
 
 
@@ -56,6 +49,9 @@ class Image{
 
 $imageA = new Image(250,500);
 $imageB = new Image(500,90);
+
 $imageWidth = $imageA->width;
 $imageHeight=$imageB->getResizeHeight($imageWidth);
-echo $imageB->GetContainOutput($imageWidth,$imageHeight); // Contain Output
+echo 'Contain Output : '.$imageB->GetContainOutput($imageWidth,$imageHeight); // Contain Output
+echo "<br>";
+echo 'Cover Output : '.$imageB->GetCoverOutput(); // Cover Output
